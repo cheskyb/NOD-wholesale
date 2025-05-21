@@ -1,31 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nod Wholesale Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <style>
+      body {
+        background-color: #fce4ec;
+        font-family: 'Helvetica Neue', sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 50px;
+        text-align: center;
+      }
+      img.logo {
+        width: 150px;
+        margin-bottom: 30px;
+      }
+      input {
+        padding: 10px;
+        font-size: 16px;
+        width: 250px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+      }
+      button {
+        padding: 12px 24px;
+        background-color: #d81b60;
+        color: white;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #c2185b;
+      }
+      .msg {
+        margin-top: 20px;
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <img class="logo" src="https://i.imgur.com/pBNXo9T.png" alt="Nod Wholesale Logo" />
+    <h2>Welcome to Nod Wholesale</h2>
+    <p>Enter your email to receive a magic login link</p>
+    <input type="email" id="email" placeholder="you@example.com" />
+    <br />
+    <button onclick="login()">Send Magic Link</button>
+    <div class="msg" id="message"></div>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nod Wholesale</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-</head>
+    <script>
+      const SUPABASE_URL = "https://yxmkghtjausafrdjyijp.supabase.co";
+      const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4bWtnaHRqYXVzYWZyZGp5aWpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4MDMwNTcsImV4cCI6MjA2MzM3OTA1N30.IlNhGohpxm_AF7VIzv-V2fiB2lB-PM3Wb6vp2dTI4vA";
 
-<body>
-  <header>
-    <img src="https://i.imgur.com/a/FhOc8uu.png" alt="Nod Logo" class="logo" />
-  </header>
+      const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  <main>
-    <div class="welcome-box">
-      <h1>Welcome to Nod Wholesale</h1>
-      <p>Please enter your email to continue:</p>
-      <form id="emailForm">
-        <input type="email" placeholder="Enter your email" required />
-        <button type="submit">Continue</button>
-      </form>
-    </div>
-  </main>
+      async function login() {
+        const email = document.getElementById("email").value;
+        let { error } = await supabase.auth.signInWithOtp({ email });
 
-  <script src="script.js"></script>
-</body>
-
+        const msg = document.getElementById("message");
+        if (error) {
+          msg.textContent = "Error sending link: " + error.message;
+        } else {
+          msg.textContent = "Check your email for the login link!";
+        }
+      }
+    </script>
+  </body>
 </html>
