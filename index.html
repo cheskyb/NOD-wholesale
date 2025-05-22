@@ -62,28 +62,35 @@
     <script type="module">
   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-  const supabaseUrl = 'https://yxmkghtjausafrdjyijp.supabase.co';
-  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4bWtnaHRqYXVzYWZyZGp5aWpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4MDMwNTcsImV4cCI6MjA2MzM3OTA1N30.IlNhGohpxm_AF7VIzv-V2fiB2lB-PM3Wb6vp2dTI4vA';
-
-  const supabase = createClient(supabaseUrl, supabaseKey);
+  const supabase = createClient(
+    'https://yxmkghtjausafrdjyijp.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4bWtnaHRqYXVzYWZyZGp5aWpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4MDMwNTcsImV4cCI6MjA2MzM3OTA1N30.IlNhGohpxm_AF7VIzv-V2fiB2lB-PM3Wb6vp2dTI4vA'
+  );
 
   async function loginWithMagicLink() {
-    const email = document.querySelector('#email').value;
+    const email = document.getElementById('email').value;
+
+    if (!email) {
+      alert('Please enter your email.');
+      return;
+    }
 
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: 'https://nod-wholesale-pl2r-git-main-cheskybs-projects.vercel.app/page2.html'
-      }
+        emailRedirectTo: 'https://nod-wholesale-pl2r-git-main-cheskybs-projects.vercel.app/page2.html',
+      },
     });
 
     if (error) {
-      alert('Login failed: ' + error.message);
+      alert('Error: ' + error.message);
     } else {
-      alert('Check your email for a magic link!');
+      alert('Check your email for the login link.');
     }
   }
-    </script>
+
+  window.loginWithMagicLink = loginWithMagicLink;
+</script>
 
   </body>
 </html>
