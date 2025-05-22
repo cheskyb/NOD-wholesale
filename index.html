@@ -45,45 +45,46 @@
       }
     </style>
   </head>
-  <body>
-    <img class="logo" src="https://i.imgur.com/pBNXo9T.png" alt="Nod Wholesale Logo" />
-    <h2>Welcome to Nod Wholesale</h2>
-    <p>Enter your email to receive a magic login link</p>
-    <input type="email" id="email" placeholder="you@example.com" />
-    <br />
-    <button onclick="login()">Send Magic Link</button>
-    <div class="msg" id="message"></div>
+  <body style="margin: 0; font-family: 'Arial', sans-serif; background-color: #ffe6ec; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh;">
+  <img src="https://i.imgur.com/Il5DhgT.png" alt="NOD Logo" style="width: 200px; margin-bottom: 40px;" />
 
-   <!-- Auth Form -->
-<form id="auth-form">
-  <label for="email">Enter your email to continue:</label>
-  <input type="email" id="email" name="email" required />
-  <button type="submit">Send Magic Link</button>
-  <p id="auth-message"></p>
-</form>
+  <h2 style="color: #444;">Welcome to NOD Wholesale</h2>
+  <p style="color: #666; margin-bottom: 20px;">Enter your email to access the store</p>
 
-<script type="module">
-  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+  <form id="loginForm" style="display: flex; flex-direction: column; align-items: center;">
+    <input type="email" id="email" placeholder="Email address" required style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; width: 250px; margin-bottom: 15px;" />
+    <button type="submit" style="padding: 10px 20px; background-color: #d6336c; color: white; border: none; border-radius: 5px; cursor: pointer;">Send Magic Link</button>
+  </form>
 
-  const supabase = createClient(
-    "https://yxmkghtjausafrdjyijp.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4bWtnaHRqYXVzYWZyZGp5aWpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4MDMwNTcsImV4cCI6MjA2MzM3OTA1N30.IlNhGohpxm_AF7VIzv-V2fiB2lB-PM3Wb6vp2dTI4vA"
-  );
+  <p id="message" style="color: green; margin-top: 20px; display: none;">Magic link sent! Check your inbox.</p>
 
-  const form = document.getElementById("auth-form");
-  const message = document.getElementById("auth-message");
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const email = form.email.value;
-    const { error } = await supabase.auth.signInWithOtp({ email });
+    const supabaseUrl = 'https://yxmkghtjausafrdjyijp.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4bWtnaHRqYXVzYWZyZGp5aWpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4MDMwNTcsImV4cCI6MjA2MzM3OTA1N30.IlNhGohpxm_AF7VIzv-V2fiB2lB-PM3Wb6vp2dTI4vA';
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
-    if (error) {
-      message.textContent = "Error: " + error.message;
-    } else {
-      message.textContent = "Check your email for the magic link!";
-    }
-  });
-</script>    
+    const form = document.getElementById('loginForm');
+    const message = document.getElementById('message');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: 'https://nod-wholesale.vercel.app/page2.html'
+        }
+      });
+
+      if (error) {
+        alert('Error: ' + error.message);
+      } else {
+        message.style.display = 'block';
+      }
+    });
+  </script>
   </body>
 </html>
