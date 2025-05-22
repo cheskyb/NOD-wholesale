@@ -54,23 +54,36 @@
     <button onclick="login()">Send Magic Link</button>
     <div class="msg" id="message"></div>
 
-    <script>
-      const SUPABASE_URL = "https://yxmkghtjausafrdjyijp.supabase.co";
-      const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4bWtnaHRqYXVzYWZyZGp5aWpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4MDMwNTcsImV4cCI6MjA2MzM3OTA1N30.IlNhGohpxm_AF7VIzv-V2fiB2lB-PM3Wb6vp2dTI4vA";
+   <!-- Auth Form -->
+<form id="auth-form">
+  <label for="email">Enter your email to continue:</label>
+  <input type="email" id="email" name="email" required />
+  <button type="submit">Send Magic Link</button>
+  <p id="auth-message"></p>
+</form>
 
-      const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-      async function login() {
-        const email = document.getElementById("email").value;
-        let { error } = await supabase.auth.signInWithOtp({ email });
+  const supabase = createClient(
+    "https://yxmkghtjausafrdjyijp.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4bWtnaHRqYXVzYWZyZGp5aWpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4MDMwNTcsImV4cCI6MjA2MzM3OTA1N30.IlNhGohpxm_AF7VIzv-V2fiB2lB-PM3Wb6vp2dTI4vA"
+  );
 
-        const msg = document.getElementById("message");
-        if (error) {
-          msg.textContent = "Error sending link: " + error.message;
-        } else {
-          msg.textContent = "Check your email for the login link!";
-        }
-      }
-    </script>
+  const form = document.getElementById("auth-form");
+  const message = document.getElementById("auth-message");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = form.email.value;
+    const { error } = await supabase.auth.signInWithOtp({ email });
+
+    if (error) {
+      message.textContent = "Error: " + error.message;
+    } else {
+      message.textContent = "Check your email for the magic link!";
+    }
+  });
+</script>    
   </body>
 </html>
