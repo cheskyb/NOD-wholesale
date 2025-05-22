@@ -58,7 +58,8 @@
 
   <p id="message" style="color: green; margin-top: 20px; display: none;">Magic link sent! Check your inbox.</p>
 
-  <script type="module">
+
+    <script type="module">
   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
   const supabaseUrl = 'https://yxmkghtjausafrdjyijp.supabase.co';
@@ -82,10 +83,7 @@
       alert('Check your email for a magic link!');
     }
   }
-</script>
+    </script>
 
-< Email input and button >
-<input type="email" id="email" placeholder="Enter your email" required />
-<button onclick="loginWithMagicLink()">Login</button>
   </body>
 </html>
