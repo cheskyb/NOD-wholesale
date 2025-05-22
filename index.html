@@ -59,17 +59,15 @@
   <p id="message" style="color: green; margin-top: 20px; display: none;">Magic link sent! Check your inbox.</p>
 
   <script type="module">
-  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-  const supabase = createClient(
-    'https://yxmkghtjausafrdjyijp.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4bWtnaHRqYXVzYWZyZGp5aWpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4MDMwNTcsImV4cCI6MjA2MzM3OTA1N30.IlNhGohpxm_AF7VIzv-V2fiB2lB-PM3Wb6vp2dTI4vA'
-  );
+  const supabaseUrl = 'https://yxmkghtjausafrdjyijp.supabase.co';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4bWtnaHRqYXVzYWZyZGp5aWpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4MDMwNTcsImV4cCI6MjA2MzM3OTA1N30.IlNhGohpxm_AF7VIzv-V2fiB2lB-PM3Wb6vp2dTI4vA';
 
-  const form = document.getElementById('login-form');
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  async function loginWithMagicLink() {
+    const email = document.querySelector('#email').value;
 
     const { error } = await supabase.auth.signInWithOtp({
       email,
@@ -79,11 +77,15 @@
     });
 
     if (error) {
-      alert('Error: ' + error.message);
+      alert('Login failed: ' + error.message);
     } else {
       alert('Check your email for a magic link!');
     }
-  });
-  </script>
+  }
+</script>
+
+<!-- Email input and button -->
+<input type="email" id="email" placeholder="Enter your email" required />
+<button onclick="loginWithMagicLink()">Login</button>
   </body>
 </html>
