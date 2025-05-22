@@ -67,29 +67,23 @@
 
   const supabase = createClient(supabaseUrl, supabaseKey);
 
-  async function loginWithMagicLink() {
-    const email = document.querySelector('#email').value;
+  document.getElementById('login-button').addEventListener('click', async function () {
+    const email = document.getElementById('email').value;
 
-    try {
-      const { error } = await supabase.auth.signInWithOtp({
-        email,
-        options: {
-          emailRedirectTo: 'https://nod-wholesale-pl2r-git-main-cheskybs-projects.vercel.app/page2.html'
-        }
-      });
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: 'https://nod-wholesale-pl2r-git-main-cheskybs-projects.vercel.app/page2.html',
+      },
+    });
 
-      if (error) {
-        console.error('Supabase error:', error);
-        alert('There was a problem logging in: ' + error.message);
-      } else {
-        alert('Check your email for a magic link to log in!');
-      }
-
-    } catch (err) {
-      console.error('Unexpected error:', err);
-      alert('Unexpected error: ' + err.message);
+    if (error) {
+      alert('There was an error. Please try again.');
+      console.error(error);
+    } else {
+      alert('Magic link sent! Check your email.');
     }
-  }
+  });
     </script>
 
   </body>
