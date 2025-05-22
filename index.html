@@ -79,15 +79,15 @@
       email,
       options: {
         emailRedirectTo: 'https://nod-wholesale-pl2r-git-main-cheskybs-projects.vercel.app/page2.html',
-      },
+      }
     });
 
     if (error) {
-      alert('Error: ' + error.message);
+      alert('Login error: ' + error.message);
     } else {
-      alert('Check your email for the login link.');
+      alert('Check your email for a magic link!');
     }
-  }
+  });
 
   window.loginWithMagicLink = loginWithMagicLink;
     </script>
