@@ -62,35 +62,35 @@
     <script type="module">
   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-  const supabase = createClient(
-    'https://yxmkghtjausafrdjyijp.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4bWtnaHRqYXVzYWZyZGp5aWpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4MDMwNTcsImV4cCI6MjA2MzM3OTA1N30.IlNhGohpxm_AF7VIzv-V2fiB2lB-PM3Wb6vp2dTI4vA'
-  );
+  const supabaseUrl = 'https://yxmkghtjausafrdjyijp.supabase.co';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4bWtnaHRqYXVzYWZyZGp5aWpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4MDMwNTcsImV4cCI6MjA2MzM3OTA1N30.IlNhGohpxm_AF7VIzv-V2fiB2lB-PM3Wb6vp2dTI4vA';
+
+  const supabase = createClient(supabaseUrl, supabaseKey);
 
   async function loginWithMagicLink() {
-    const email = document.getElementById('email').value;
+    const email = document.querySelector('#email').value;
 
-    if (!email) {
-      alert('Please enter your email.');
-      return;
-    }
+    try {
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: 'https://nod-wholesale-pl2r-git-main-cheskybs-projects.vercel.app/page2.html'
+        }
+      });
 
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: 'https://nod-wholesale-pl2r-git-main-cheskybs-projects.vercel.app/page2.html',
-      },
-    });
+      if (error) {
+        console.error('Supabase error:', error);
+        alert('There was a problem logging in: ' + error.message);
+      } else {
+        alert('Check your email for a magic link to log in!');
+      }
 
-    if (error) {
-      alert('Error: ' + error.message);
-    } else {
-      alert('Check your email for the login link.');
+    } catch (err) {
+      console.error('Unexpected error:', err);
+      alert('Unexpected error: ' + err.message);
     }
   }
-
-  window.loginWithMagicLink = loginWithMagicLink;
-</script>
+    </script>
 
   </body>
 </html>
