@@ -75,22 +75,25 @@
       return;
     }
 
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: 'https://nod-wholesale-pl2r-git-main-cheskybs-projects.vercel.app/page2.html',
-      },
-    });
+    try {
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: 'https://nod-wholesale-pl2r-git-main-cheskybs-projects.vercel.app/page2.html',
+        },
+      });
 
-    if (error) {
-      alert('Error: ' + error.message);
-    } else {
-      alert('Check your email for the login link.');
+      if (error) {
+        alert('Error: ' + error.message);
+      } else {
+        alert('Success! Check your email for the login link.');
+      }
+    } catch (err) {
+      alert('Unexpected error: ' + err.message);
     }
   }
 
   window.loginWithMagicLink = loginWithMagicLink;
     </script>
-
   </body>
 </html>
