@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collection 3 Products</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff0f5;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 30px;
+    }
+
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 220px;
+      padding: 15px;
+      transition: transform 0.2s;
+    }
+
+    .product-card:hover {
+      transform: scale(1.03);
+    }
+
+    .product-card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .product-name {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .product-link {
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Collection 3 – Product Page</h1>
+
+  <div class="products">
+    <a href="page4.html" class="product-link">
+      <div class="product-card">
+        <img src="https://via.placeholder.com/200x250?text=Product+X" alt="Product X" />
+        <div class="product-name">Product X</div>
+      </div>
+    </a>
+
+    <a href="page4.html" class="product-link">
+      <div class="product-card">
+        <img src="https://via.placeholder.com/200x250?text=Product+Y" alt="Product Y" />
+        <div class="product-name">Product Y</div>
+      </div>
+    </a>
+
+    <a href="page4.html" class="product-link">
+      <div class="product-card">
+        <img src="https://via.placeholder.com/200x250?text=Product+Z" alt="Product Z" />
+        <div class="product-name">Product Z</div>
+      </div>
+    </a>
+  </div>
+
+</body>
+</html>
