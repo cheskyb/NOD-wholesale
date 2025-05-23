@@ -4,7 +4,42 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nod Wholesale Login</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script type="module">
+      import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+      const supabase = createClient(
+        'https://yxmkghtjausafrdjyijp.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4bWtnaHRqYXVzYWZyZGp5aWpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4MDMwNTcsImV4cCI6MjA2MzM3OTA1N30.IlNhGohpxm_AF7VIzv-V2fiB2lB-PM3Wb6vp2dTI4vA'
+      );
+
+      async function loginWithMagicLink(email) {
+        const { error } = await supabase.auth.signInWithOtp({
+          email,
+          options: {
+            emailRedirectTo: 'https://nod-wholesale-pl2r-git-main-cheskybs-projects.vercel.app/page2.html',
+          },
+        });
+
+        if (error) {
+          alert('Login error: ' + error.message);
+        } else {
+          document.getElementById('message').style.display = 'block';
+        }
+      }
+
+      window.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('loginForm');
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const email = document.getElementById('email').value;
+          if (!email) {
+            alert('Please enter your email.');
+            return;
+          }
+          loginWithMagicLink(email);
+        });
+      });
+    </script>
     <style>
       body {
         background-color: #fce4ec;
@@ -14,6 +49,9 @@
         align-items: center;
         padding: 50px;
         text-align: center;
+        margin: 0;
+        min-height: 100vh;
+        justify-content: center;
       }
       img.logo {
         width: 150px;
@@ -39,57 +77,21 @@
       button:hover {
         background-color: #c2185b;
       }
-      .msg {
+      #message {
         margin-top: 20px;
         color: green;
+        display: none;
       }
     </style>
   </head>
-  <body style="margin: 0; font-family: 'Arial', sans-serif; background-color: #ffe6ec; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh;">
-  <img src="https://i.imgur.com/Il5DhgT.png" alt="NOD Logo" style="width: 200px; margin-bottom: 40px;" />
-
-  <h2 style="color: #444;">Welcome to NOD Wholesale</h2>
-  <p style="color: #666; margin-bottom: 20px;">Enter your email to access the store</p>
-
-  <form id="loginForm" style="display: flex; flex-direction: column; align-items: center;">
-    <input type="email" id="email" placeholder="Enter your email" required />
-<button onclick="loginWithMagicLink()">Login</button>
-  </form>
-
-  <p id="message" style="color: green; margin-top: 20px; display: none;">Magic link sent! Check your inbox.</p>
-
-
-    <script type="module">
-  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
-
-  const supabase = createClient(
-    'https://yxmkghtjausafrdjyijp.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4bWtnaHRqYXVzYWZyZGp5aWpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4MDMwNTcsImV4cCI6MjA2MzM3OTA1N30.IlNhGohpxm_AF7VIzv-V2fiB2lB-PM3Wb6vp2dTI4vA'
-  );
-
-  async function loginWithMagicLink() {
-    const email = document.getElementById('email').value;
-
-    if (!email) {
-      alert('Please enter your email.');
-      return;
-    }
-
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: 'https://nod-wholesale-pl2r-git-main-cheskybs-projects.vercel.app/page2.html',
-      }
-    });
-console.log('Error:', error);
-    if (error) {
-      alert('Login error: ' + error.message);
-    } 
-    else {
-      alert('Check your email for a magic link!');
-    }
-  }
-  window.loginWithMagicLink = loginWithMagicLink;
-    </script>
+  <body>
+    <img src="https://i.imgur.com/Il5DhgT.png" alt="NOD Logo" class="logo" />
+    <h2>Welcome to NOD Wholesale</h2>
+    <p>Enter your email to access the store</p>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Enter your email" required />
+      <button type="submit">Login</button>
+    </form>
+    <p id="message">Magic link sent! Check your inbox.</p>
   </body>
 </html>
