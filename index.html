@@ -1,100 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nod Wholesale Login</title>
-    <script type="module">
-      import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NOD Wholesale Login</title>
+  <style>
+    body {
+      background-color: #fce4ec;
+      font-family: 'Helvetica Neue', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0 20px;
+      text-align: center;
+    }
 
-      const supabase = createClient(
-        'https://yxmkghtjausafrdjyijp.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4bWtnaHRqYXVzYWZyZGp5aWpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4MDMwNTcsImV4cCI6MjA2MzM3OTA1N30.IlNhGohpxm_AF7VIzv-V2fiB2lB-PM3Wb6vp2dTI4vA'
-      );
+    .logo {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      margin-bottom: 20px;
+    }
 
-      async function loginWithMagicLink(email) {
-        const { error } = await supabase.auth.signInWithOtp({
-          email,
-          options: {
-            emailRedirectTo: 'https://nod-wholesale-pl2r-git-main-cheskybs-projects.vercel.app/page2.html',
-          },
-        });
+    h2 {
+      margin: 10px 0;
+    }
 
-        if (error) {
-          alert('Login error: ' + error.message);
-        } else {
-          document.getElementById('message').style.display = 'block';
-        }
-      }
+    input[type="email"] {
+      padding: 12px;
+      width: 100%;
+      max-width: 300px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
 
-      window.addEventListener('DOMContentLoaded', () => {
-        const form = document.getElementById('loginForm');
-        form.addEventListener('submit', (e) => {
-          e.preventDefault();
-          const email = document.getElementById('email').value;
-          if (!email) {
-            alert('Please enter your email.');
-            return;
-          }
-          loginWithMagicLink(email);
-        });
-      });
-    </script>
-    <style>
-      body {
-        background-color: #fce4ec;
-        font-family: 'Helvetica Neue', sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 50px;
-        text-align: center;
-        margin: 0;
-        min-height: 100vh;
-        justify-content: top;
-      }
-      img.logo {
-    width: 175px;
-    height: 175px;
-    object-fit: contain;
-    margin-bottom: 50px;
-    padding: 0;
-      }
-      input {
-        padding: 10px;
-        font-size: 16px;
-        width: 250px;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-      }
-      button {
-        padding: 12px 24px;
-        background-color: #d81b60;
-        color: white;
-        font-size: 16px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-      }
-      button:hover {
-        background-color: #c2185b;
-      }
-      #message {
-        margin-top: 20px;
-        color: green;
-        display: none;
-      }
-    </style>
-  </head>
-  <body>
-    <img src="IMG-20250521-WA0003.jpg" class="logo" />
-    <h2>Welcome to NOD Wholesale</h2>
-    <p>Enter your email to access the store</p>
-    <form id="loginForm">
-      <input type="email" id="email" placeholder="Enter your email" required />
-      <button type="submit">Login</button>
-    </form>
-    <p id="message">Verification link sent! Check your inbox.</p>
-  </body>
+    button {
+      padding: 12px 24px;
+      background-color: #d81b60;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #c2185b;
+    }
+
+    #message {
+      margin-top: 20px;
+      color: green;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Update src with your actual logo URL -->
+  <img src="https://your-logo-link-here.png" alt="NOD Logo" class="logo" />
+  
+  <h2>Welcome to NOD Wholesale</h2>
+  <p>Enter your email to access the store</p>
+
+  <form id="loginForm">
+    <input type="email" id="email" placeholder="Enter your email" required />
+    <button type="submit">Access Store</button>
+  </form>
+
+  <p id="message">Magic link sent! Check your inbox.</p>
+
+  <script type="module" src="script.js"></script>
+</body>
 </html>
